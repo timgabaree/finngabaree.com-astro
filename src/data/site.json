@@ -1,0 +1,84 @@
+{
+  "name": "Finn Gabaree",
+  "firstName": "Finn",
+  "domain": "finngabaree.com",
+  "url": "https://finngabaree.com",
+  "ga": "G-Q7HJLYNYQJ",
+  "privacyEmail": "tim@timgabaree.com",
+  "title": "Finn Gabaree | Creativity | Technology | Learning | Adventure",
+  "description": "The personal website of Finn Gabaree, sharing creativity, technology, gaming, learning, projects, exploration, and new adventures.",
+  "image": "/media/finngabaree-og-1200x1200.png",
+  "heading": "Welcome to FinnGabaree.com",
+  "introduction": "Hi! I'm Finn. This is my website and the beginning of many adventures. I'll be adding projects, photos, stories, and other fun things here soon.",
+  "schema": {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://finngabaree.com/#website",
+        "url": "https://finngabaree.com/",
+        "name": "Finn Gabaree",
+        "description": "The personal website of Finn Gabaree, sharing creativity, technology, gaming, learning, projects, exploration, and new adventures.",
+        "inLanguage": "en-US"
+      },
+      {
+        "@type": "ImageObject",
+        "@id": "https://finngabaree.com/#primaryimage",
+        "url": "https://finngabaree.com/media/finngabaree-og-1200x1200.png",
+        "contentUrl": "https://finngabaree.com/media/finngabaree-og-1200x1200.png",
+        "width": 1200,
+        "height": 1200,
+        "encodingFormat": "image/png",
+        "caption": "Finn Gabaree",
+        "representativeOfPage": true
+      },
+      {
+        "@type": "ProfilePage",
+        "@id": "https://finngabaree.com/#webpage",
+        "url": "https://finngabaree.com/",
+        "name": "Finn Gabaree | Creativity | Technology | Learning | Adventure",
+        "description": "The personal website of Finn Gabaree, sharing creativity, technology, gaming, learning, projects, exploration, and new adventures.",
+        "isPartOf": {
+          "@id": "https://finngabaree.com/#website"
+        },
+        "primaryImageOfPage": {
+          "@id": "https://finngabaree.com/#primaryimage"
+        },
+        "mainEntity": {
+          "@id": "https://finngabaree.com/#person"
+        },
+        "about": {
+          "@id": "https://finngabaree.com/#person"
+        },
+        "inLanguage": "en-US"
+      },
+      {
+        "@type": "Person",
+        "@id": "https://finngabaree.com/#person",
+        "name": "Finn Gabaree",
+        "givenName": "Finn",
+        "familyName": "Gabaree",
+        "url": "https://finngabaree.com/",
+        "image": {
+          "@id": "https://finngabaree.com/#primaryimage"
+        },
+        "description": "A student interested in creativity, technology, gaming, learning, exploration, and problem solving.",
+        "knowsAbout": [
+          "Technology",
+          "Artificial Intelligence",
+          "Programming",
+          "Gaming",
+          "Minecraft",
+          "Roblox",
+          "Creative Problem Solving",
+          "Learning",
+          "Science",
+          "Exploration"
+        ],
+        "mainEntityOfPage": {
+          "@id": "https://finngabaree.com/#webpage"
+        }
+      }
+    ]
+  }
+}

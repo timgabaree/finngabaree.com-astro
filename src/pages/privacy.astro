@@ -1,0 +1,24 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import site from '../data/site.json';
+---
+<SiteLayout title={`Privacy | ${site.name}`} description={`How ${site.name}'s website handles privacy and optional analytics.`}>
+  <article class="hero prose">
+    <h1>Privacy</h1><p>Updated October 28, 2026.</p>
+    <h2>About this website</h2>
+    <p>This personal website shares public updates. It currently has no accounts, comments, contact forms, purchases, or visitor uploads. Please do not send sensitive personal information.</p>
+    <h2>Hosting and security</h2>
+    <p>Cloudflare hosts and delivers the website. To deliver pages and protect the service, it processes technical information such as IP addresses, request details, and browser information. We do not use this website to identify visitors by name or link IP addresses to people or physical addresses.</p>
+    <h2 id="cookies-title">Optional Google Analytics cookies</h2>
+    <p>Google Analytics loads only when you choose “Allow cookies.” It helps measure visits, pages viewed, device types, and approximate location. Advertising personalization and Google signals are disabled. You can decline, dismiss the notice without consenting, or change your choice using “Privacy choices” in the footer. Withdrawing consent stops Google Analytics and removes its measurement cookies from this site.</p>
+    <p>Your choice is stored in your browser for up to 180 days. A dismissed notice stays hidden for the current tab session. If your browser cannot save the choice, Google Analytics stays off. The site works without optional cookies.</p>
+    <h2>Cloudflare analytics</h2>
+    <p>Cloudflare may provide aggregate traffic and performance measurements and operational logs. Its Web Analytics service does not use analytics cookies. These measurements are separate from optional Google Analytics.</p>
+    <h2>Information about children</h2>
+    <p>This site does not ask visitors for age, school, location, or other personal details. A parent or guardian manages privacy requests. Please contact the site administrator if personal information has been shared by mistake or you would like to request its removal.</p>
+    <h2>Contact the site administrator</h2>
+    <p>For privacy questions, email <a href={`mailto:${site.privacyEmail}`}>{site.privacyEmail}</a>. Email is processed by the administrator’s email provider, separately from this website. We keep correspondence only as needed to respond and manage the request.</p>
+    <h2>Provider information</h2>
+    <p><a href="https://policies.google.com/privacy">Google privacy policy</a> · <a href="https://www.cloudflare.com/privacypolicy/">Cloudflare privacy policy</a></p>
+  </article>
+</SiteLayout>

@@ -1,0 +1,7 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import site from '../data/site.json';
+---
+<SiteLayout title={`Sitemap | ${site.name}`} description={`Pages on ${site.name}'s website.`}>
+  <section class="hero prose"><h1>Sitemap</h1><ul><li><a href="/">Home</a></li><li><a href="/privacy">Privacy</a></li></ul><p><a href="/sitemap.xml">XML sitemap for search engines</a></p></section>
+</SiteLayout>

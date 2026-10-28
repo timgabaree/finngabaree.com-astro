@@ -1,0 +1,6 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import Hero from '../components/Hero.astro';
+import site from '../data/site.json';
+---
+<SiteLayout><Hero heading={site.heading} introduction={site.introduction} /></SiteLayout>

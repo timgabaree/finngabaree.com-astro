@@ -1,0 +1,9 @@
+---
+interface Props { heading: string; introduction: string; status?: string; }
+const {heading,introduction,status='Coming Soon'}=Astro.props;
+---
+<section class="hero" aria-labelledby="hero-title">
+  <h1 id="hero-title">{heading}</h1>
+  <p>{introduction}</p>
+  <span class="button coming-soon">{status}</span>
+</section>

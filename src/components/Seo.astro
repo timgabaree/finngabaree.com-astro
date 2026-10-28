@@ -1,0 +1,39 @@
+---
+import site from '../data/site.json';
+interface Props { title: string; description: string; pathname: string; noindex: boolean; }
+const {title,description,noindex}=Astro.props;
+const pathname=Astro.props.pathname.replace(/\/index\.html$/, '/').replace(/\.html$/, '').replace(/\/$/, '') || '/';
+const canonical=new URL(pathname,site.url).href;
+const image=new URL(site.image,site.url).href;
+const schema=pathname==='/' ? site.schema : {'@context':'https://schema.org','@type':'WebPage',name:title,description,url:canonical,isPartOf:{'@id':`${site.url}/#website`}};
+---
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="theme-color" content="#111111" />
+<meta name="author" content={site.name} />
+<title>{title}</title>
+<meta name="description" content={description} />
+<meta name="robots" content={noindex?'noindex, nofollow':'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'} />
+<link rel="canonical" href={canonical} />
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<link rel="icon" href="/favicon.ico" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:type" content={pathname==='/'?'profile':'website'} />
+<meta property="og:site_name" content={site.name} />
+<meta property="og:url" content={canonical} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={image} />
+<meta property="og:image:secure_url" content={image} />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="1200" />
+<meta property="og:image:alt" content={site.name} />
+{pathname==='/' && <><meta property="profile:first_name" content={site.firstName} /><meta property="profile:last_name" content="Gabaree" /></>}
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={image} />
+<meta name="twitter:image:alt" content={site.name} />
+<script type="application/ld+json" set:html={JSON.stringify(schema).replace(/</g,'\\u003c')} />

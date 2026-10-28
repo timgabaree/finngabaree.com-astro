@@ -1,0 +1,82 @@
+:root {
+  /* Colors */
+  --color-primary: #1f5fae;
+  --color-primary-light: #3d7ac8;
+  --color-background: #f2f8ff;
+  --color-surface: #ffffff;
+  --color-text: #1f2937;
+  --color-text-muted: #4b5563;
+  --color-border: #d7e6f8;
+  /* Typography */
+  --font-family: Arial, Helvetica, sans-serif;
+  --font-size-base: 16px;
+  --font-size-title: clamp(2rem, 5vw, 3.5rem);
+  /* Spacing */
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 2rem;
+  --space-lg: 4rem;
+  /* Layout */
+  --max-width: 900px;
+  --radius: 18px;
+  --shadow: 0 20px 50px rgba(31, 95, 174, .12);
+}
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  color: var(--color-text);
+  background:
+    radial-gradient(circle at top center, rgba(61, 122, 200, .18), transparent 40rem), linear-gradient(180deg, var(--color-background), #e4f1ff);
+  min-height: 100vh;
+}
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 5rem var(--space-md) 3rem;
+}
+.hero {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 5rem 4rem;
+  text-align: center;
+}
+.hero h1 {
+  font-size: var(--font-size-title);
+  color: var(--color-primary);
+  margin-bottom: var(--space-sm);
+}
+.hero p {
+  max-width: 620px;
+  margin: 0 auto var(--space-md);
+}
+.button {
+  display: inline-block;
+  text-decoration: none;
+  background: var(--color-primary);
+  color: #fff;
+  padding: 0.95rem 1.6rem;
+  border-radius: 999px;
+  font-weight: 700;
+  transition:
+    background .2s ease, transform .2s ease;
+}
+.button:hover {
+  background: var(--color-primary-light);
+  transform: translateY(-2px);
+}
+@media (max-width:640px) {
+  .container {
+    padding: 2rem 1rem;
+  }
+  .hero {
+    padding: 2.5rem 1.5rem;
+  }
+}
+html{scroll-behavior:smooth}body{line-height:1.6}h1{line-height:1.15;overflow-wrap:anywhere}.coming-soon{cursor:default}.coming-soon:hover{background:var(--color-primary);transform:none}a{color:var(--color-primary)}a:hover{color:var(--color-primary)}button{font:inherit;cursor:pointer}button:focus-visible,a:focus-visible{outline:3px solid var(--color-primary);outline-offset:4px}.skip-link{position:fixed;top:8px;left:8px;z-index:100;padding:10px 16px;background:white;transform:translateY(-180%)}.skip-link:focus{transform:translateY(0)}.site-footer{max-width:900px;margin:auto;padding:0 1rem 2rem;text-align:center;font-size:.9rem}.site-footer nav{display:flex;justify-content:center;gap:1rem;flex-wrap:wrap}.site-footer button{background:transparent;border:0;text-decoration:underline;color:var(--color-primary)}.site-footer p{margin-top:1rem;color:var(--color-text-muted)}.prose{text-align:left;padding:3rem}.prose h1{font-size:clamp(2rem,5vw,3rem)}.prose h2{margin:1.5rem 0 .5rem;font-size:1.3rem}.prose p{margin:0 0 1rem;max-width:none}.prose ul{margin:1rem 0 1rem 1.5rem}.prose a{overflow-wrap:anywhere}.analytics-choices{position:fixed;right:16px;bottom:16px;width:min(390px,calc(100% - 32px));z-index:50;padding:16px;background:#fff;color:#1f2937;border:1px solid #aab3c0;border-radius:12px;box-shadow:0 4px 24px #0002;font-size:14px;line-height:1.5}.analytics-choices[hidden],[data-analytics-settings][hidden]{display:none}.analytics-choices p{margin:0 0 10px}.analytics-copy{padding-right:28px}.analytics-choices [data-analytics-status]:empty{display:none}.analytics-close{position:absolute;top:7px;right:7px;min-width:32px;min-height:32px;border:0;background:transparent;color:#374151;font-size:24px}.analytics-choices a{color:#174d83;text-decoration:underline}.privacy-choice-actions{display:flex;gap:8px}.privacy-choice-actions button{flex:1;min-height:40px;background:#fff;border:1px solid #526479;border-radius:6px;color:#1f2937;padding:6px 10px}.privacy-choice-actions button:hover{background:#eef3f8}.analytics-preview{font-size:12px}@media(max-width:640px){.prose{padding:2rem 1.5rem}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition:none!important}}
