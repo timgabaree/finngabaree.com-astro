@@ -50,7 +50,7 @@ These are homepage lab measurements, not a guarantee of future scores or a compl
 
 Verified compressed archive and restored-file comparison are in the dedicated external-drive Website Archives folder. A second plain ZIP is in Dropbox's Websites/Archive folder; off-device sync has not been independently verified.
 
-- Monitoring remains deliberately deferred until RGE, Finn, Clint and Carrie migrations are complete.
+- Monitoring enabled October 28: UptimeRobot `804464232` checks the HTTPS homepage every minute, accepts 2xx only without redirects, and emails `tim@timgabaree.com`. Certificate errors and expiry reminders at 30/14/7/0 days are enabled. No contact form exists, so no email-delivery monitor is needed. Existing DNS and GoDaddy remain unchanged.
 - Carrie has not been changed.
 - Search Console sitemap submission/indexing review and later analytics reporting can be handled in the post-migration review; sitemap availability and crawlability are already verified.
 - Continue to retain shared GoDaddy hosting and email/service records. Never cancel the Deluxe hosting account as part of a single-site rollback.
