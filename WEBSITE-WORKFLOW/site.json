@@ -1,0 +1,35 @@
+{
+  "domain": "finngabaree.com",
+  "branch": "main",
+  "worker": "finngabaree-com-astro-production",
+  "checks": [
+    [
+      "run",
+      "check"
+    ],
+    [
+      "test"
+    ],
+    [
+      "run",
+      "build:production"
+    ],
+    [
+      "run",
+      "test:site"
+    ]
+  ],
+  "liveChecks": [
+    [
+      "scripts/verify-deployment.mjs",
+      "production"
+    ]
+  ],
+  "livePages": [
+    "/",
+    "/privacy",
+    "/sitemap"
+  ],
+  "repository": "finngabaree.com-astro",
+  "account": "7459bd2037d71d23fd030e3542b9df61"
+}

@@ -1,5 +1,7 @@
 # Finn Gabaree — Astro
 
+**Website update buttons:** [Start here — numbered WebStorm workflow](WEBSITE-WORKFLOW/00-START-HERE.md). In WebStorm, open the run-configuration dropdown and choose **WEBSITE WORKFLOW**. Setup alone does not commit, push, upload or publish.
+
 Independent, modular Astro site for https://finngabaree.com. The original GoDaddy site is retained unchanged. This project does not share a Git repository or deployment with the PHP sites.
 
 ## Work locally
