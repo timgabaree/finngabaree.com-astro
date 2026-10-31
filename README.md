@@ -72,3 +72,7 @@ Off-device Dropbox sync remains a user check.
 To restore GoDaddy serving, remove ONLY the two exact-host Worker routes for this domain. Since the original DNS records and GoDaddy content remain intact, no DNS restoration or file upload is required. Keep email records, service aliases and unrelated routes untouched. Do not disable/delete the shared GoDaddy hosting account. For an Astro-only regression, redeploy a known-good version instead.
 
 See `LAUNCH.md` for verification and follow-ups. Detailed raw reports and DNS snapshots live in ignored `.local/`; credentials and archives are never tracked.
+
+## Monitoring
+
+Services: UptimeRobot and Cloudflare.
