@@ -1,77 +1,97 @@
 # Finn Gabaree — Astro
 
-**Website update buttons:** [Start here — numbered WebStorm workflow](WEBSITE-WORKFLOW/00-START-HERE.md). In WebStorm, open the run-configuration dropdown and choose **WEBSITE WORKFLOW**. Setup alone does not commit, push, upload or publish.
+Personal website introducing interests in creativity, technology, gaming, learning, and projects.
 
-Independent, modular Astro site for https://finngabaree.com. The original GoDaddy site is retained unchanged. This project does not share a Git repository or deployment with the PHP sites.
+Live site: [finngabaree.com](https://finngabaree.com/).
 
-## Work locally
+## How it is built
 
-Use Node from `.nvmrc`, then:
+Astro generates static HTML and assets. A TypeScript Cloudflare Worker serves those assets and handles redirects, security headers, and protected staging. Small browser scripts provide interactive behavior; there is no PHP runtime or application database in the deployed site.
+
+A compact homepage, privacy controls, HTML/XML sitemaps, and a modular structure for adding future pages and project collections.
+
+The toolchain uses Node.js (version pinned in `.nvmrc`), npm, TypeScript, and Wrangler. `package-lock.json` pins dependency versions.
+
+## Project structure
+
+- `src/data/site.json` — site identity, content, metadata, and analytics configuration.
+- `src/pages/` — home, privacy, sitemaps, robots rules, and 404 page.
+- `src/layouts/SiteLayout.astro` — shared page shell.
+- `src/components/` — hero, SEO, footer, and privacy controls.
+- `src/styles/site.css`, `public/` — theme, browser scripts, icons, and media.
+- `worker/index.ts` — environment gates, redirects, staging authentication, and security headers.
+- `scripts/`, `tests/` — privacy, build, and deployment checks.
+
+Add routes as Astro pages using the shared layout. Update navigation, sitemap entries, and tests alongside new content. Larger project collections can use Astro content collections without duplicating page markup.
+
+## Local development
+
+Install the Node version in `.nvmrc`, then run:
 
 ```sh
+nvm use
 npm ci
 npm run dev
-npm run check
-npm test
-npm run build:production
-npm run test:site
+```
+
+Astro's development server previews page content. To test Worker routing locally:
+
+```sh
 npm run build:staging
 npm run preview
 ```
 
-The Worker preview supplies the real security headers and protected-routing behavior. Astro's development server is for content editing.
+Use the local URL printed by each server.
 
-## Structure and growth
-
-- `src/data/site.json`: site identity, content, metadata, analytics ID, administrator contact.
-- `src/layouts/SiteLayout.astro`: shared document, styles, footer, privacy controls.
-- `src/components/`: reusable hero, SEO, footer, analytics choices.
-- `src/pages/`: home, privacy, human sitemap, XML sitemap, robots, 404.
-- `src/styles/site.css`: theme variables and responsive shared styling.
-- `public/`: original icons/media and small browser scripts.
-- `worker/index.ts`: environment gates, canonical redirects, staging authentication, security headers.
-- `tests/` and `scripts/`: privacy, Worker, generated-site and deployed-site checks.
-
-Add routes as Astro pages using the shared layout. For larger project/story collections, introduce typed Astro content collections rather than duplicating page markup. Update sitemap routes and tests when adding pages. No application server or database is needed for the current site.
-
-## Deployment
-
-Protected staging: https://finngabaree-com-astro-staging.timgabaree-com-astro.workers.dev
-
-`npm run deploy:staging` builds and deploys staging. Credentials are Cloudflare secrets, with the local copy in macOS Keychain (service `finngabaree.com-astro-staging-basic-auth`, account `review`); never put passwords in Git.
-
-Production is a separate Worker, configured in `wrangler.production.jsonc`. Build production, run all checks, then explicitly deploy:
+## Validation
 
 ```sh
-npm run check && npm test
-npm run build:production && npm run test:site
-npx wrangler versions upload --config wrangler.production.jsonc
-# Replace VERSION_ID below with the version returned by the upload.
-npx wrangler versions deploy VERSION_ID@100 --config wrangler.production.jsonc --yes
-node scripts/verify-deployment.mjs production
-node scripts/verify-deployment.mjs staging
+npm run check
+npm test
+npm run build:production
+npm run test:site
 ```
 
-Only exact-host routes `finngabaree.com/*` and `www.finngabaree.com/*` are attached. No wildcard-host route. Existing proxied A/CNAME records remain unchanged; email, service aliases and other sites are not routed to this Worker. Production workers.dev and version preview URLs are disabled. Minimum TLS is 1.2.
+`node scripts/verify-deployment.mjs production` checks deployed pages and assets. Automated checks complement, rather than replace, responsive and keyboard testing.
 
-The current deployment login can upload and deploy Workers but cannot manage zone routes. The initial routes were attached in the signed-in Cloudflare dashboard. The version-based workflow above preserves them. Do not use a route-replacing workaround or broaden token permissions just to publish content. Normal `wrangler deploy` may upload a new live version before reporting a route-permission error, so always verify the actual deployment after any partial failure.
+## Cloudflare deployment
+
+Staging and production use separate Workers:
+
+- `wrangler.jsonc` — staging configuration; assets built to `dist/`.
+- `wrangler.production.jsonc` — production configuration; assets built to `dist-production/`.
+
+Staging uses HTTP Basic authentication with `STAGING_USER` and `STAGING_PASSWORD` stored as Cloudflare secrets. It is excluded from indexing and does not load Google Analytics. After configuring credentials and infrastructure, `npm run deploy:staging` builds and publishes staging.
+
+Production redirects HTTP and `www` to the HTTPS apex. Public production `workers.dev` and version-preview URLs are disabled. Apex and www use exact-host Worker routes. Keep route management separate from content releases.
+
+For an **existing, configured production Worker**, run validation, commit and push the source, then:
+
+```sh
+npx wrangler versions upload --config wrangler.production.jsonc
+# Replace VERSION_ID with the version returned by the upload.
+npx wrangler versions deploy VERSION_ID@100 --config wrangler.production.jsonc
+```
+
+Upload does not shift traffic; the deployment command does. Verify the published pages, redirects, assets, and privacy controls afterward. Git pushes do not deploy the website. Keep the previous version available for a reviewed rollback.
+
+The optional [WebStorm workflow](WEBSITE-WORKFLOW/00-START-HERE.md) provides separate check, commit, push, upload, publish, and verification actions.
 
 ## Privacy and analytics
 
-The existing Google Analytics property is retained, but loads only after an affirmative cookie choice on the production apex host. Dismissal is not consent. Declining removes Google cookies; reopening choices is available in the footer. Staging never loads Google Analytics. Advertising signals are disabled.
+Google Analytics loads only after opt-in on production. Visitors can reopen privacy choices from the footer; dismissal is not consent. Cloudflare Web Analytics is configured separately at the edge; avoid adding a duplicate beacon. This site has no contact form, user accounts, or email-sending service.
 
-Existing automatic Cloudflare Web Analytics is retained; do not add a second manual beacon. The privacy contact is tim@timgabaree.com. No forms, accounts, children's contact details, or email-sending service were added.
+## Adapting this project
 
-## Backup and rollback
+This is a site-specific implementation, not an account-neutral starter:
 
-Source reference folder: `../finngabaree.com` (Clint's original folder spelling is intentional and unchanged).
-Verified GoDaddy archive: `/Volumes/StudioStack NVMe/Website Archives/finngabaree.com/2026-10-28-pre-cutover/`.
-Plain ZIP second copy: `../Archive/finngabaree.com-GoDaddy-2026-10-28/`.
-Off-device Dropbox sync remains a user check.
+1. Replace content, branding, metadata, domain references, analytics identifiers, and privacy/contact details.
+2. Set your own Cloudflare account, Worker names, hostnames, routes, and environment variables. Keep production closed until setup and checks are complete.
+3. Provision the resources and bindings referenced by the Worker configurations in your own account. Configure secrets outside Git.
+4. Update host-specific tests and verification scripts. The optional WebStorm helpers also enforce repository ownership, branch, and account identity; adapt both `WEBSITE-WORKFLOW/site.json` and the guards in `workflow.mjs` before reuse.
+5. Establish staging, then production infrastructure and routing separately. The version-upload sequence above is for subsequent releases, not a complete first-time provisioning procedure.
 
-To restore GoDaddy serving, remove ONLY the two exact-host Worker routes for this domain. Since the original DNS records and GoDaddy content remain intact, no DNS restoration or file upload is required. Keep email records, service aliases and unrelated routes untouched. Do not disable/delete the shared GoDaddy hosting account. For an Astro-only regression, redeploy a known-good version instead.
-
-See `LAUNCH.md` for verification and follow-ups. Detailed raw reports and DNS snapshots live in ignored `.local/`; credentials and archives are never tracked.
+Keep credentials, generated builds, archives, and local reports out of Git and public assets. Use only content and media you have permission to reuse. During a hosting migration, preserve unrelated sites and email DNS.
 
 ## Monitoring
 
