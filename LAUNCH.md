@@ -1,11 +1,13 @@
 # Launch verification — October 28, 2026
 
+Account, deployment, and email-event identifiers, origin addresses, and machine-specific paths are shown as placeholders where applicable. Use your own configuration and backup records for actual values; placeholders are not deployable values.
+
 Status: live on Cloudflare at https://finngabaree.com and https://www.finngabaree.com; www and HTTP redirect to the HTTPS apex while preserving paths and queries.
 
 ## Release
 
-- Production version: `260a2fb5-4c90-4042-a320-7d0c0cb7939a` (100% of production traffic).
-- Protected staging version: `dc53d8f8-f9a4-48b9-ac1e-265f1d36390a`.
+- Production version: `DEPLOYMENT_VERSION_13` (100% of production traffic).
+- Protected staging version: `DEPLOYMENT_VERSION_14`.
 - Two exact-host Worker routes only; default fail-closed behavior.
 - Original DNS records retained, including apex/www, email and all service aliases.
 - Minimum TLS 1.2 confirmed after reload; TLS 1.3 remains enabled.
