@@ -7,3 +7,15 @@ import FamilySites from './FamilySites.astro';
   <p>© {new Date().getUTCFullYear()} {site.name}</p>
   <FamilySites />
 </footer>
+
+<style>
+  .site-footer > nav a,
+  .site-footer > nav button {
+    text-decoration: none;
+  }
+
+  .site-footer > nav a:hover,
+  .site-footer > nav button:hover {
+    text-decoration: underline;
+  }
+</style>
