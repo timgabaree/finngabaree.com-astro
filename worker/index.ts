@@ -27,7 +27,10 @@ async function route(request:Request,env:Env):Promise<Response>{
 export default {async fetch(request:Request,env:Env):Promise<Response>{
  let response:Response;try{response=await route(request,env);}catch{response=new Response('Temporarily unavailable',{status:503});}
  const result=new Response(response.body,response);
- result.headers.set('Content-Security-Policy',csp);result.headers.set('X-Content-Type-Options','nosniff');result.headers.set('X-Frame-Options','DENY');result.headers.set('Referrer-Policy','strict-origin-when-cross-origin');result.headers.set('Permissions-Policy','camera=(), geolocation=(), microphone=()');
+ // Native browser XML viewers use inline styles to hide the raw source and format the tree.
+ const sitemapXml = new URL(request.url).pathname === '/sitemap.xml' && result.status === 200 && /^application\/xml(?:;|$)/i.test(result.headers.get('Content-Type') ?? '');
+ const policy = sitemapXml ? csp.replace("style-src 'self'", "style-src 'self' 'unsafe-inline'") : csp;
+ result.headers.set('Content-Security-Policy',policy);result.headers.set('X-Content-Type-Options','nosniff');result.headers.set('X-Frame-Options','DENY');result.headers.set('Referrer-Policy','strict-origin-when-cross-origin');result.headers.set('Permissions-Policy','camera=(), geolocation=(), microphone=()');
  if(new URL(request.url).protocol==='https:')result.headers.set('Strict-Transport-Security','max-age=31536000');
  if(env.ENVIRONMENT!=='production'){result.headers.set('X-Robots-Tag','noindex, nofollow, noarchive');result.headers.set('Cache-Control','private, no-store');result.headers.append('Vary','Authorization');}
  else if(result.status>=400||/^\/404(?:\.|\/|$)/.test(new URL(request.url).pathname)){result.headers.set('X-Robots-Tag','noindex, nofollow');result.headers.set('Cache-Control','no-store');}
