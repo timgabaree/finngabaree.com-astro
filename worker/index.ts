@@ -1,4 +1,5 @@
-interface Env { ASSETS: Fetcher; ENVIRONMENT?: string; SITE_HOST?: string; PRODUCTION_ENABLED?: string; STAGING_USER?: string; STAGING_PASSWORD?: string; }
+import {queueTraffic} from './geo-traffic.ts';
+interface Env { GEO_DB?: GeoBindings["GEO_DB"]; ASSETS: Fetcher; ENVIRONMENT?: string; SITE_HOST?: string; PRODUCTION_ENABLED?: string; STAGING_USER?: string; STAGING_PASSWORD?: string; }
 const csp="default-src 'self'; object-src 'none'; script-src 'self' https://www.googletagmanager.com https://static.cloudflareinsights.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://www.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com https://cloudflareinsights.com; base-uri 'self'; form-action 'none'; frame-ancestors 'none'";
 async function equal(a:string,b:string){const digest=(s:string)=>crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));const [x,y]=await Promise.all([digest(a),digest(b)]);let difference=0;const l=new Uint8Array(x),r=new Uint8Array(y);for(let i=0;i<l.length;i++)difference|=l[i]^r[i];return difference===0;}
 async function route(request:Request,env:Env):Promise<Response>{
@@ -24,7 +25,7 @@ async function route(request:Request,env:Env):Promise<Response>{
  if(env.ENVIRONMENT!=='production'&&path==='/robots.txt')return new Response('User-agent: *\nDisallow: /\n',{headers:{'Content-Type':'text/plain'}});
  return env.ASSETS.fetch(request);
 }
-export default {async fetch(request:Request,env:Env):Promise<Response>{
+export default {async fetch(request:Request,env:Env,ctx?:ExecutionContext):Promise<Response>{
  let response:Response;try{response=await route(request,env);}catch{response=new Response('Temporarily unavailable',{status:503});}
  const result=new Response(response.body,response);
  // Native browser XML viewers use inline styles to hide the raw source and format the tree.
@@ -35,5 +36,6 @@ export default {async fetch(request:Request,env:Env):Promise<Response>{
  if(env.ENVIRONMENT!=='production'){result.headers.set('X-Robots-Tag','noindex, nofollow, noarchive');result.headers.set('Cache-Control','private, no-store');result.headers.append('Vary','Authorization');}
  else if(result.status>=400||/^\/404(?:\.|\/|$)/.test(new URL(request.url).pathname)){result.headers.set('X-Robots-Tag','noindex, nofollow');result.headers.set('Cache-Control','no-store');}
  else if(/text\/html|text\/css|javascript/.test(result.headers.get('Content-Type')??''))result.headers.set('Cache-Control','no-cache');
+ queueTraffic(request,result,env,ctx);
  return result;
 }};
